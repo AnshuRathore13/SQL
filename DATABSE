@@ -1,0 +1,93 @@
+create database veho; 
+use veho;
+create table logininfo(
+	userid int not null,
+    password varchar(20)
+);
+
+insert into logininfo
+(userid , password)
+values
+(101,"Abc1001"),
+(102,"Bcd2001"),
+(103,"Cde3001");
+
+
+
+ 
+CREATE DATABASE if not exists bus_management;
+USE bus_management;
+
+ 
+CREATE TABLE Bus (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    number VARCHAR(50) NOT NULL UNIQUE,
+    capacity INT NOT NULL
+);
+ 
+CREATE TABLE Route (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    start_point VARCHAR(100) NOT NULL,
+    end_point VARCHAR(100) NOT NULL
+);
+
+ 
+CREATE TABLE Crew (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    role ENUM('Driver', 'Conductor') NOT NULL
+);
+ 
+CREATE TABLE Schedule (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    bus_id INT NOT NULL,
+    route_id INT NOT NULL,
+    start_time DATETIME NOT NULL,
+    end_time DATETIME NOT NULL,
+    FOREIGN KEY (bus_id) REFERENCES Bus(id),
+    FOREIGN KEY (route_id) REFERENCES Route(id)
+);
+ 
+CREATE TABLE CrewAssignment (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    schedule_id INT NOT NULL,
+    crew_id INT NOT NULL,
+    FOREIGN KEY (schedule_id) REFERENCES Schedule(id),
+    FOREIGN KEY (crew_id) REFERENCES Crew(id)
+);
+
+
+
+INSERT INTO Bus (number, capacity) VALUES
+('DL01AB1234', 50),
+('DL02CD5678', 40),
+('DL03EF9101', 45);
+
+
+INSERT INTO Route (name, start_point, end_point) VALUES
+('Route 101', 'Connaught Place', 'Karol Bagh'),
+('Route 102', 'Saket', 'Gurgaon'),
+('Route 103', 'Nehru Place', 'Dwarka');
+ 
+INSERT INTO Crew (name, role) VALUES
+('Hari', 'Driver'),
+('Rahul', 'Conductor'),
+('Harsh', 'Driver'),
+('Krish', 'Conductor');
+ 
+INSERT INTO Schedule (bus_id, route_id, start_time, end_time) VALUES
+(1, 1, '2024-10-18 08:00:00', '2024-10-18 10:00:00'),
+(2, 2, '2024-10-18 09:00:00', '2024-10-18 11:00:00'),
+(3, 3, '2024-10-18 10:00:00', '2024-10-18 12:00:00');
+
+ 
+INSERT INTO CrewAssignment (schedule_id, crew_id) VALUES
+(1, 1),  
+(1, 2),  
+(2, 3),  
+(2, 4);   
+
+
+select*from  bus;
+select*from CrewAssignment;
